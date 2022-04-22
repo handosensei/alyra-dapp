@@ -6,6 +6,7 @@
     "dotenv": "^16.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-jsx": "^1.0.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "3.2.0",
     "web3": "^1.7.3"
