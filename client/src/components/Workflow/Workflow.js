@@ -22,11 +22,20 @@ class Workflow extends Component
         this.setState({ 
             label: this.workflowStatus[status],
             workflowStatus: status,
+            next: this.workflowStatus[parseInt(status) + 1],
         });
     }
 
     render() {
-        return (<div>workflow en cours : {this.state.label}</div>);
+        return (
+            <div>
+                workflow en cours : {this.state.label}
+                <br />
+                prochaine étape : {this.state.next}
+                <br />
+                <button type="button" class="btn btn-primary">Prochaine étape</button>
+            </div>  
+        );
     }
 }
 
