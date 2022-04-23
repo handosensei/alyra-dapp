@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-
+import Step from "../Step/Step.jsx";
 
 class Workflow extends Component 
 {
@@ -70,7 +70,7 @@ class Workflow extends Component
 
     render() {
         return (
-            <div>
+            <div className="Workflow">
                 workflow en cours : {this.state.label}
                 <br />
                 prochaine étape : {this.state.next}
@@ -79,6 +79,7 @@ class Workflow extends Component
                     <button type="button" className="btn btn-primary" onClick={this.forward} >Prochaine étape</button> :
                     <div></div>
                 }
+                <Step status={this.state.status} contract={this.state.contract}/>
             </div>  
         );
     }
