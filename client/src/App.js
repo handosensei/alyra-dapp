@@ -7,7 +7,7 @@ import "./App.css";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Dashboard from "./components/Dashboard/dashboard";
 import Homepage from "./components/Homepage/homepage";
-import Workflow from "./components/Workflow/Workflow";
+import Workflow from "./components/Workflow/Workflow.jsx";
 
 
 class App extends Component {
@@ -74,7 +74,11 @@ class App extends Component {
             <Route path="dashboard" element={ !this.state.isOwner ? (<Navigate replace to="/homepage" />) : (<Dashboard account={this.state.accounts[0]} contract={this.state.contract} />) } />
           </Routes>
         </BrowserRouter>
-        <Workflow contract={this.state.contract}/>
+        
+        <Workflow 
+          contract={this.state.contract} 
+          account={this.state.accounts[0]} 
+        />
       </div> 
     );
   }

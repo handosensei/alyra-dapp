@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 
+
+
 class Workflow extends Component 
 {
     state = { 
         label: null, 
+        status: null,
+        next: null,
+        contract: null,
+        account: null,
     };
       
     workflowStatus = {
@@ -21,19 +27,26 @@ class Workflow extends Component
 
         this.setState({ 
             label: this.workflowStatus[status],
-            workflowStatus: status,
+            status: status,
             next: this.workflowStatus[parseInt(status) + 1],
+            contract: contract,
+            account: this.props.account
         });
+    }
+
+    forward = async () => {
+        const contract = this.state.contract;
+        await contract.methods.startProposalsRegistering().send({from: this.state.account});
     }
 
     render() {
         return (
             <div>
-                workflow en cours : {this.state.label}
+                workflow en cours : {this.state.label} ({this.state.status})
                 <br />
                 prochaine étape : {this.state.next}
                 <br />
-                <button type="button" class="btn btn-primary">Prochaine étape</button>
+                <button type="button" className="btn btn-primary" onClick={this.forward}>Prochaine étape</button>
             </div>  
         );
     }
