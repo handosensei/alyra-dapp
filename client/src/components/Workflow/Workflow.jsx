@@ -36,17 +36,49 @@ class Workflow extends Component
 
     forward = async () => {
         const contract = this.state.contract;
-        await contract.methods.startProposalsRegistering().send({from: this.state.account});
+        let object;
+        switch (this.state.status) {
+            case 0:
+                object = await contract.methods.startProposalsRegistering().send({from: this.state.account});
+                break;
+            case 1:
+                object = await contract.methods.endProposalsRegistering().send({from: this.state.account});
+                break;
+            case 2:
+                object = await contract.methods.startVotingSession().send({from: this.state.account});
+                break;
+            case 3:
+                object = await contract.methods.endVotingSession().send({from: this.state.account});
+                break;
+            case 4:
+                object = await contract.methods.tallyVotes().send({from: this.state.account});
+                break;
+        }
+        
+        const newStatus = object.events.WorkflowStatusChange.returnValues.newStatus;
+
+        this.setState({ 
+            label: this.workflowStatus[newStatus],
+            status: newStatus,
+            next: this.workflowStatus[parseInt(newStatus) + 1],
+            contract: contract,
+            account: this.state.account
+        });
+
+        alert('Workflow en cours : ' + this.workflowStatus[newStatus]);
     }
 
     render() {
         return (
             <div>
-                workflow en cours : {this.state.label} ({this.state.status})
+                workflow en cours : {this.state.label}
                 <br />
                 prochaine étape : {this.state.next}
                 <br />
-                <button type="button" className="btn btn-primary" onClick={this.forward}>Prochaine étape</button>
+                { (this.state.status < 5) ?
+                    <button type="button" className="btn btn-primary" onClick={this.forward} >Prochaine étape</button> :
+                    <div></div>
+                }
             </div>  
         );
     }
