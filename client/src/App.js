@@ -74,7 +74,7 @@ class App extends Component {
             <Route path="dashboard" element={ !this.state.isOwner ? (<Navigate replace to="/homepage" />) : (<Dashboard account={this.state.accounts[0]} contract={this.state.contract} />) } />
           </Routes>
         </BrowserRouter>
-        <Workflow />
+        <Workflow contract={this.state.contract}/>
       </div> 
     );
   }
