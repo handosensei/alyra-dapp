@@ -7,6 +7,8 @@ import "./App.css";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Dashboard from "./components/Dashboard/dashboard";
 import Homepage from "./components/Homepage/homepage";
+import Workflow from "./components/Workflow/Workflow";
+
 
 class App extends Component {
   state = { 
@@ -72,7 +74,8 @@ class App extends Component {
             <Route path="dashboard" element={ !this.state.isOwner ? (<Navigate replace to="/homepage" />) : (<Dashboard account={this.state.accounts[0]} contract={this.state.contract} />) } />
           </Routes>
         </BrowserRouter>
-        </div> 
+        <Workflow />
+      </div> 
     );
   }
 }
