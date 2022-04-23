@@ -5,8 +5,8 @@ import getWeb3 from "./getWeb3";
 import "./App.css";
 
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import Dashboard from "./routes/dashboard";
-import Homepage from "./routes/homepage";
+import Dashboard from "./components/Dashboard/dashboard";
+import Homepage from "./components/Homepage/homepage";
 
 class App extends Component {
   state = { 
@@ -48,6 +48,7 @@ class App extends Component {
         isOwner: (owner == accounts[0]), 
         workflowStatus: this.workflowStatus[status]
       });
+      
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -63,11 +64,12 @@ class App extends Component {
     }
 
     return (     
+      
       <div className="App">
         <BrowserRouter fallback={<div>Chargement...</div>}>
           <Routes>
             <Route path="/" element={ this.state.isOwner ? (<Navigate replace to="/dashboard" />) : <Homepage /> } />
-            <Route path="dashboard" element={ !this.state.isOwner ? (<Navigate replace to="/homepage" />) : <Dashboard /> } />
+            <Route path="dashboard" element={ !this.state.isOwner ? (<Navigate replace to="/homepage" />) : (<Dashboard account={this.state.accounts[0]} contract={this.state.contract} />) } />
           </Routes>
         </BrowserRouter>
         </div> 
