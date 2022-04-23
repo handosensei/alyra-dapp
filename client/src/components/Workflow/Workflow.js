@@ -2,6 +2,10 @@ import React, { Component } from "react";
 
 class Workflow extends Component 
 {
+    state = { 
+        label: null, 
+    };
+      
     workflowStatus = {
         0: 'Inscription des électeurs',
         1: 'Enregistrement des candidats',
@@ -12,11 +16,17 @@ class Workflow extends Component
     };
 
     componentDidMount = async () => {
-        console.log(this.props);
+        const contract = this.props.contract;
+        const status = await contract.methods.getStatus().call();
+
+        this.setState({ 
+            label: this.workflowStatus[status],
+            workflowStatus: status,
+        });
     }
 
     render() {
-        return (<div>workflow</div>);
+        return (<div>workflow en cours : {this.state.label}</div>);
     }
 }
 
