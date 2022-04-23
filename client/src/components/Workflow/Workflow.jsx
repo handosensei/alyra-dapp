@@ -14,8 +14,8 @@ class Workflow extends Component
       
     workflowStatus = {
         0: 'Inscription des électeurs',
-        1: 'Enregistrement des candidats',
-        2: 'Fermeture des enregistrements des candidats',
+        1: 'Enregistrement des propositions',
+        2: 'Fermeture des propositions',
         3: 'Ouverture des votes',
         4: 'Fermeture des votes',
         5: 'Dépouillement des votes'
@@ -38,24 +38,21 @@ class Workflow extends Component
         const contract = this.state.contract;
         let object;
         switch (this.state.status) {
-            case 0:
-                object = await contract.methods.startProposalsRegistering().send({from: this.state.account});
-                break;
-            case 1:
+            case '1':
                 object = await contract.methods.endProposalsRegistering().send({from: this.state.account});
                 break;
-            case 2:
+            case '2':
                 object = await contract.methods.startVotingSession().send({from: this.state.account});
                 break;
-            case 3:
+            case '3':
                 object = await contract.methods.endVotingSession().send({from: this.state.account});
                 break;
-            case 4:
+            case '4':
                 object = await contract.methods.tallyVotes().send({from: this.state.account});
                 break;
         }
         
-        const newStatus = object.events.WorkflowStatusChange.returnValues.newStatus;
+        const newStatus = await object.events.WorkflowStatusChange.returnValues.newStatus;
 
         this.setState({ 
             label: this.workflowStatus[newStatus],
