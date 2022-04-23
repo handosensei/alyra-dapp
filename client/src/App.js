@@ -9,7 +9,6 @@ import Dashboard from "./components/Dashboard/dashboard";
 import Homepage from "./components/Homepage/homepage";
 import Workflow from "./components/Workflow/Workflow.jsx";
 
-
 class App extends Component {
   state = { 
     web3: null, 
@@ -18,15 +17,6 @@ class App extends Component {
     isOwner: null
   };
 
-  workflowStatus = {
-      0: 'Inscription des électeurs',
-      1: 'Enregistrement des candidats',
-      2: 'Fermeture des enregistrements des candidats',
-      3: 'Ouverture des votes',
-      4: 'Fermeture des votes',
-      5: 'Dépouillement des votes'
-  };
-  
   componentDidMount = async () => {
 
     window.ethereum.on('accountsChanged', () => {
@@ -41,14 +31,12 @@ class App extends Component {
       const instance = new web3.eth.Contract(Voting.abi, deployedNetwork && deployedNetwork.address);
 
       const owner = await instance.methods.owner().call();
-      const status = await instance.methods.getStatus().call();
       
       this.setState({ 
         web3, 
         accounts, 
         contract: instance, 
         isOwner: (owner == accounts[0]), 
-        workflowStatus: this.workflowStatus[status]
       });
       
     } catch (error) {
