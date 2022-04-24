@@ -51,6 +51,7 @@ class App extends Component {
   };
 
   getStep() {
+    console.log(this.state);
     switch(this.state.status) {
       case '0':
         if (this.state.isOwner) {

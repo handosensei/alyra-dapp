@@ -34,7 +34,8 @@ class Step0 extends Component {
             contract: this.props.contract,
             address: '',
         });
-        return false;
+
+        window.location.reload();
     }
 
     handleChange(e) {

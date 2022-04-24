@@ -39,6 +39,9 @@ class Workflow extends Component
         const contract = this.state.contract;
         let object;
         switch (this.state.status) {
+            case '0':
+                object = await contract.methods.startProposalsRegistering().send({from: this.state.account});
+                break;
             case '1':
                 object = await contract.methods.endProposalsRegistering().send({from: this.state.account});
                 break;
@@ -64,6 +67,7 @@ class Workflow extends Component
         });
         
         alert('Workflow en cours : ' + this.workflowStatus[newStatus]);
+        window.location.reload();
     }
 
     render() {
