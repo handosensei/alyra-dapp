@@ -1,4 +1,4 @@
-import React, { Component, useRef } from "react";
+import React, { Component } from "react";
 
 class Step0 extends Component {
     
@@ -20,18 +20,16 @@ class Step0 extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('handleSubmit');
-        console.log(this.props);
-        console.log(this.state);
-        
         const contract = this.state.contract;
-        
         const object = await contract.methods.addVoter(this.state.address).send({ from: this.state.account });
         const newVoterAddress = await object.events.VoterRegistered.returnValues.voterAddress;
+        
         alert('nouveau voter : ' + newVoterAddress);
+        
         this.setState({
             status: this.props.status,
             contract: this.props.contract,
+            account: this.props.account,
             address: '',
         });
 
@@ -44,13 +42,14 @@ class Step0 extends Component {
         this.setState({
             status: this.props.status,
             contract: this.props.contract,
+            account: this.props.account,
             address: e.target.value,
         });
     }
     
     render() {
         return (
-            <div className="row mt-100">
+            <div className="row">
                 <div className="col-6 offset-md-3 justify-content-start">
                     <form onSubmit={this.handleSubmit}>
                         <fieldset>

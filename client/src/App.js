@@ -23,11 +23,12 @@ class App extends Component {
     })
 
     try {
-      const web3 = await getWeb3();
-      const accounts = await web3.eth.getAccounts();
+      const web3 = await getWeb3();      
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = Voting.networks[networkId];
       const instance = new web3.eth.Contract(Voting.abi, deployedNetwork && deployedNetwork.address);
+
+      const accounts = await web3.eth.getAccounts();
 
       const owner = await instance.methods.owner().call();
       const status = await instance.methods.getStatus().call();
@@ -51,7 +52,6 @@ class App extends Component {
   };
 
   getStep() {
-    console.log(this.state);
     switch(this.state.status) {
       case '0':
         if (this.state.isOwner) {
