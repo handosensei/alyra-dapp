@@ -63,6 +63,8 @@ class App extends Component {
             status={this.state.status}
             contract={this.state.contract}
             account={this.state.accounts[0]} />
+        } else {
+          return <p>L'administrateur saisie les votants</p>
         }
         break;
       case '1':
@@ -71,6 +73,8 @@ class App extends Component {
             status={this.state.status}
             contract={this.state.contract}
             account={this.state.accounts[0]} />
+        } else {
+          return <p>Ajout de proposition en cours</p>
         }
       case '3':
           return <Step3 
