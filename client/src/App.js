@@ -6,6 +6,8 @@ import "./App.css";
 
 import Workflow from "./components/Workflow/Workflow.jsx";
 import Step0 from "./components/Step/Step0.jsx";
+import Step1 from "./components/Step/Step1.jsx";
+import Step3 from "./components/Step/Step3.jsx";
 
 class App extends Component {
   state = { 
@@ -33,6 +35,7 @@ class App extends Component {
       const owner = await instance.methods.owner().call();
       const status = await instance.methods.getStatus().call();
       const nbVoters = await instance.methods.getNbVoters().call();
+      const nbProposals = await instance.methods.getNbProposals().call();
 
       this.setState({ 
         web3, 
@@ -40,6 +43,7 @@ class App extends Component {
         status: status,
         contract: instance, 
         nbVoters: nbVoters,
+        nbProposals: nbProposals,
         isOwner: (owner === accounts[0]), 
       });
       
@@ -60,8 +64,19 @@ class App extends Component {
             contract={this.state.contract}
             account={this.state.accounts[0]} />
         }
-        
         break;
+      case '1':
+        if (!this.state.isOwner) {
+          return <Step1 
+            status={this.state.status}
+            contract={this.state.contract}
+            account={this.state.accounts[0]} />
+        }
+      case '3':
+          return <Step3 
+            status={this.state.status}
+            contract={this.state.contract}
+            account={this.state.accounts[0]} />
       default:
         return;
     }
@@ -85,7 +100,13 @@ class App extends Component {
                 <h2>Dashboard d'administration du VOTE</h2> } 
             </div>
             <div>
-              <p>Nombre de votant : {this.state.nbVoters}</p>
+              <ul>
+                <li>Nombre de votant : {this.state.nbVoters}</li>
+                { this.state.status > 0 ? 
+                <li>Nombre de proposal : {this.state.nbProposals}</li> : 
+                <li>&nbsp;</li>
+                }
+              </ul>
             </div>
           </div>
           
