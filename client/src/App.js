@@ -4,9 +4,8 @@ import getWeb3 from "./getWeb3";
 
 import "./App.css";
 
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import Dashboard from "./components/Dashboard/dashboard";
-import Homepage from "./components/Homepage/homepage";
+import Dashboard from "./components/Dashboard/Dashboard.jsx";
+import Homepage from "./components/Homepage/Homepage.jsx";
 import Workflow from "./components/Workflow/Workflow.jsx";
 
 class App extends Component {
@@ -56,17 +55,21 @@ class App extends Component {
     return (     
       
       <div className="App">
-        <BrowserRouter fallback={<div>Chargement...</div>}>
-          <Routes>
-            <Route path="/" element={ this.state.isOwner ? (<Navigate replace to="/dashboard" />) : <Homepage /> } />
-            <Route path="dashboard" element={ !this.state.isOwner ? (<Navigate replace to="/homepage" />) : (<Dashboard account={this.state.accounts[0]} contract={this.state.contract} />) } />
-          </Routes>
-        </BrowserRouter>
-        
-        <Workflow 
-          contract={this.state.contract} 
-          account={this.state.accounts[0]} 
-        />
+        <div className="container">
+          <h4>{this.state.accounts[0]}</h4>
+          { !this.state.isOwner ? 
+            (<Homepage />) : 
+            (<Dashboard account={this.state.accounts[0]} contract={this.state.contract} />) } 
+          <div className="row">
+            <div className="col-12">
+            <Workflow 
+              contract={this.state.contract} 
+              account={this.state.accounts[0]} 
+              isOwner={this.state.isOwner}
+            />
+            </div>
+          </div>
+        </div>
       </div> 
     );
   }

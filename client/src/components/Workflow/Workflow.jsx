@@ -8,6 +8,7 @@ class Workflow extends Component
         next: null,
         contract: null,
         account: null,
+        isOwner: null,
     };
       
     workflowStatus = {
@@ -28,7 +29,8 @@ class Workflow extends Component
             status: status,
             next: this.workflowStatus[parseInt(status) + 1],
             contract: contract,
-            account: this.props.account
+            account: this.props.account,
+            isOwner: this.props.isOwner
         });
     }
 
