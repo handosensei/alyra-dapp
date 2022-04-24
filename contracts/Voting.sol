@@ -34,7 +34,7 @@ contract Voting is Ownable {
     WorkflowStatus public workflowStatus;
     Proposal[] proposalsArray;
     mapping (address => Voter) voters;
-
+    uint public nbVoters;
 
     event VoterRegistered(address voterAddress); 
     event WorkflowStatusChange(WorkflowStatus previousStatus, WorkflowStatus newStatus);
@@ -53,6 +53,10 @@ contract Voting is Ownable {
     function getVoter(address _addr) external onlyVoters view returns (Voter memory) {
         return voters[_addr];
     }
+
+    function getNbVoters() external view returns (uint) {
+        return nbVoters;
+    }
     
     function getOneProposal(uint _id) external onlyVoters view returns (Proposal memory) {
         return proposalsArray[_id];
@@ -69,6 +73,7 @@ contract Voting is Ownable {
         require(voters[_addr].isRegistered != true, 'Already registered');
     
         voters[_addr].isRegistered = true;
+        nbVoters++;
         emit VoterRegistered(_addr);
     }
  

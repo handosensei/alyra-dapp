@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+
+
 class Workflow extends Component 
 {
     state = { 
@@ -22,12 +24,11 @@ class Workflow extends Component
 
     componentDidMount = async () => {
         const contract = this.props.contract;
-        const status = await contract.methods.getStatus().call();
-
+        
         this.setState({ 
-            label: this.workflowStatus[status],
-            status: status,
-            next: this.workflowStatus[parseInt(status) + 1],
+            label: this.workflowStatus[this.props.status],
+            status: this.props.status,
+            next: this.workflowStatus[parseInt(this.props.status) + 1],
             contract: contract,
             account: this.props.account,
             isOwner: this.props.isOwner
@@ -61,22 +62,31 @@ class Workflow extends Component
             contract: contract,
             account: this.state.account
         });
-
+        
         alert('Workflow en cours : ' + this.workflowStatus[newStatus]);
     }
 
     render() {
         return (
             <div className="Workflow">
-                workflow en cours : {this.state.label}
-                <br />
-                prochaine étape : {this.state.next}
-                <br />
-                { (this.state.status < 5 && this.state.isOwner) ?
-                    <button type="button" className="btn btn-primary" onClick={this.forward} >Prochaine étape</button> :
-                    <div></div>
-                }
-            </div>  
+                <div className="row">
+                    <div className="col-12">
+                        
+                        workflow en cours : {this.state.label}
+                        <br />
+                        prochaine étape : {this.state.next}
+                        <br />
+                        { (this.state.status < 5 && this.state.isOwner) ?
+                            <button type="button" className="btn btn-primary" onClick={this.forward} >Prochaine étape</button> :
+                            <div></div>
+                        }
+                        
+                        
+                    </div>  
+                </div>  
+                
+            </div> 
+            
         );
     }
 }
