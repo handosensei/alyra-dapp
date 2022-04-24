@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import Step from "../Step/Step.jsx";
-
 class Workflow extends Component 
 {
     state = { 
@@ -72,11 +70,10 @@ class Workflow extends Component
                 <br />
                 prochaine étape : {this.state.next}
                 <br />
-                { (this.state.status < 5) ?
+                { (this.state.status < 5 && this.state.isOwner) ?
                     <button type="button" className="btn btn-primary" onClick={this.forward} >Prochaine étape</button> :
                     <div></div>
                 }
-                <Step status={this.state.status} contract={this.state.contract}/>
             </div>  
         );
     }
